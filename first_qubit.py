@@ -4,11 +4,16 @@ from qiskit import QuantumCircuit
 from qiskit.primitives import StatevectorSampler
 
 
-def main() -> None:
+def build_circuit() -> QuantumCircuit:
+    """Return a measured one-qubit circuit in an equal superposition."""
     circuit = QuantumCircuit(1, 1)
     circuit.h(0)
     circuit.measure(0, 0)
+    return circuit
 
+
+def main() -> None:
+    circuit = build_circuit()
     sampler = StatevectorSampler()
     result = sampler.run([circuit], shots=1000).result()[0]
     counts = result.data.c.get_counts()
